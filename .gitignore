@@ -87,6 +87,11 @@ celerybeat-schedule
 venv/
 ENV/
 bin/
+include/
+get_version/
+*.swp
+*~
+pip-selfcheck.json
 
 # Spyder project settings
 .spyderproject
