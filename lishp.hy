@@ -62,6 +62,13 @@
       False))
   abs-path)
 
+(defn split-arg-list [args]
+  (if args
+    (->> (.split args " ")
+         (filter (fn [arg] (not (= arg ""))))
+         (list))
+    [""]))
+
 ;; handle interrupt signals
 (defn sig-handler [sig frame]
   (cond
@@ -80,6 +87,7 @@
       (get 0)
       (list)))
 
+;; TODO: only lower cmd not args
 (defn lower-list [tokens]
   (list (map lower tokens)))
 
@@ -87,7 +95,12 @@
   (list (map strip tokens)))
 
 (defn exec [cmd args]
-  (.execvp os (get-absolute-path cmd) args))
+  (setv pid (.fork os))
+  (if (= pid 0)
+    (.execvp os
+             cmd
+             (+ [cmd] (split-arg-list args)))
+    (.waitpid os pid 0)))
 
 (defn exec-cmd [tokens]
   (setv cmd (get tokens 0))
