@@ -69,6 +69,17 @@
          (list))
     [""]))
 
+(defn arg-list-not-empty? [args]
+  (if (get args 0)
+    True
+    False))
+
+(defn get-final-args [cmd args]
+  (setv arg-list (split-arg-list args))
+  (if (arg-list-not-empty? arg-list)
+    (+ [cmd] () arg-list)
+    [cmd]))
+
 ;; handle interrupt signals
 (defn sig-handler [sig frame]
   (cond
@@ -99,7 +110,7 @@
   (if (= pid 0)
     (.execvp os
              cmd
-             (+ [cmd] (split-arg-list args)))
+             (get-final-args cmd args))
     (.waitpid os pid 0)))
 
 (defn exec-cmd [tokens]
