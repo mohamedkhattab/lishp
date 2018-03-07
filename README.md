@@ -5,6 +5,15 @@ Lishp is a Unix shell written in hy (a lisp dialect embedded in python)
 
 ## usage
 to use lishp you need to have `python 3` and `pip` installed
+
+clone the repo by running:
+
+`$ git clone https://github.com/mohamedkhattab/lishp.git`
+
+change directory to the repo:
+
+`$ cd lishp/`
+
 then install the requirements through pip by running:
 
 `$ pip install -r requirements.txt`
